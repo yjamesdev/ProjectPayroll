@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model attendance {
+  ID            Int                    @id @default(autoincrement())
+  IdEmployee    Int
+  Date          DateTime               @default(now()) @db.Date
+  HoursEntrance DateTime               @db.Time(0)
+  HoursExit     DateTime               @db.Time(0)
+  TypeAbsence   attendance_TypeAbsence
+}
+
+model employee {
+  ID          Int             @id @default(autoincrement())
+  CodEmployee String          @db.VarChar(250)
+  IdCard      String          @db.VarChar(60)
+  Adress      String          @db.VarChar(250)
+  Phone       String          @db.VarChar(100)
+  Name        String          @db.VarChar(100)
+  Lastname    String          @db.VarChar(100)
+  Departament Int
+  Contract    Int
+  Post        String          @db.VarChar(100)
+  BankCheck   Int
+  Date        DateTime        @default(now()) @db.Date
+  status      employee_status
+}
+
+model hoursextra {
+  ID         Int      @id @default(autoincrement())
+  idEmpleado Int
+  Date       DateTime @default(now()) @db.Date
+  Hours      DateTime @db.Time(0)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model nomina {
+  IdNomina    Int @id @default(autoincrement())
+  EnterPrice  String @db.VarChar(250)
+  Adress      Int
+  DateCreated Int
+  PaymentDate Int
+  BaseSalary  Int
+  HoursWorked Int
+  NetSalary   Int
+  Codpayroll  Int
+  StatusPay   Int
+  Commet      String @db.Text
+  Tax         Int
+  Deductions  Int
+
+  @@ignore
+}
+
+model user {
+  ID         Int      @id @default(autoincrement())
+  Username   String   @db.VarChar(250)
+  Password   String   @db.VarChar(100)
+  Role       Int
+  AccessDate DateTime @default(now()) @db.Date
+  Img        Bytes
+}
+
+enum attendance_TypeAbsence {
+  Illness
+  vacation
+  Permiso
+  EMPTY_ENUM_VALUE
+}
+
+enum employee_status {
+  // 1 @map("1")
+  // 2 @map("2")
+  // 3 @map("3")
+  EMPTY_ENUM_VALUE @map("")
+}
