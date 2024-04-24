@@ -1,18 +1,31 @@
-import '../assets/Nav.css'
-import Logo  from '../../public/default.svg'
+import "../assets/Nav.css";
+import logo from "/icon.png";
+import PropTypes from "prop-types";
+import {FiHome} from 'react-icons/fi'
+import { Link } from "react-router-dom";
 
-const Navbar = () => {
-    return (
-        <div className="sidenav">
-            <img src={Logo} alt="Logo" className='Logo' />
-            <ul>
-                <li><a href="/"></a>Home</li>
-                <li><a href=""></a>About us</li>
-                <li><a href=""></a>Contact us</li>
-                <li><a href=""></a></li>
-            </ul>
-        </div>
-    )
-}
+const Navbar = ({ show }) => {
+  return (
+    <div className={show ? "sidenav active" : "sidenav"}>
+      <img src={logo} alt="Logo" className="logo" />
+      <ul>
+        <li>
+          <Link to="/"><FiHome/>Home</Link>
+        </li>
+        <li>
+          <Link to="/Abouts us">Abouts us</Link>
+        </li>
 
-export default Navbar
+        <li>
+          <Link to="/">Contact</Link>
+        </li>
+      </ul>
+    </div>
+  );
+};
+
+Navbar.propTypes = {
+  show: PropTypes.bool.isRequired,
+};
+
+export default Navbar;
